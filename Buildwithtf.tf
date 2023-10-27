@@ -32,8 +32,14 @@ resource "yandex_compute_instance" "test" {
 
   network_interface {
     subnet_id = "e9b6m0jmtruhhm3r4bdj"
-    ipv4 = "10.128.0.9"
+    nat_ip_address = "true"
   }
+
+
+output "instance_ip" {
+  value = yandex_compute_instance.test.network_interface.0.nat_ip_address
+}
+
 #Indicate the path to the ssh key
   metadata = {
     ssh-keys = "builder:${file("/home/dmitry/test/Lesson14Terraform/test.pub")}"
@@ -42,8 +48,8 @@ resource "yandex_compute_instance" "test" {
   connection {
     type     = "ssh"
     user     = "builder"
-    private_key = file("/home/dmitry/test/Lesson14Terraform/test.pub")
-    host     = yandex_compute_instance.test.network_interface.0.ip_address
+    private_key = file("/home/dmitry/test/Lesson14Terraform/test")
+    host     = yandex_compute_instance.test.network_interface.0.nat_ip_address
   }
 
   provisioner "remote-exec" {
