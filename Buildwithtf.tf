@@ -6,6 +6,12 @@ terraform {
     }
   }
 }
+
+# Define output
+output "public_ip_address" {
+  value = yandex_compute_instance.test.public_ip_address
+}
+
 #Configure connection to my yandex.cloud
 provider "yandex" {
   token                    = ""
@@ -44,7 +50,7 @@ resource "yandex_compute_instance" "test" {
     type     = "ssh"
     user     = "builder"
     private_key = file("/home/dmitry/test/Lesson14Terraform/test")
-    host     = yandex_compute_instance.test.public_ip_address
+    host     = public_ip_address
   }
 
   provisioner "remote-exec" {
