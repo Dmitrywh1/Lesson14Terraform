@@ -32,7 +32,7 @@ resource "yandex_compute_instance" "test" {
 
   network_interface {
     subnet_id = "e9b6m0jmtruhhm3r4bdj"
-    ipv4 = "10.0.0.10"
+    ipv4 = "10.128.0.9"
   }
 #Indicate the path to the ssh key
   metadata = {
