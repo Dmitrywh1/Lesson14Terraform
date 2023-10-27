@@ -31,7 +31,7 @@ resource "yandex_compute_instance" "test" {
   }
 
   network_interface {
-    subnet_id = "e2ltot2465pt7sutgup4"
+    subnet_id = "enpern5gqbhv9fd84q8t"
   }
 
   metadata = {
