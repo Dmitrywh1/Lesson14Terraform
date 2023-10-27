@@ -7,10 +7,6 @@ terraform {
   }
 }
 
-# Define output
-output "public_ip_address" {
-  value = yandex_compute_instance.test.network_interface.0.nat_ip_address
-}
 
 #Configure connection to my yandex.cloud
 provider "yandex" {
@@ -20,8 +16,8 @@ provider "yandex" {
   zone                     = "ru-central1-a"
 }
 
-resource "yandex_compute_instance" "test" {
-  name        = "test"
+resource "yandex_compute_instance" "build" {
+  name        = "build"
   platform_id = "standard-v1"
   zone        = "ru-central1-a"
 #Chose count core and ram
@@ -50,7 +46,7 @@ resource "yandex_compute_instance" "test" {
     type     = "ssh"
     user     = "ubuntu"
     private_key = file("/home/dmitry/test/Lesson14Terraform/test")
-    host = yandex_compute_instance.test.network_interface.0.nat_ip_address
+    host = yandex_compute_instance.build.network_interface.0.nat_ip_address
   }
 
   provisioner "file" {
