@@ -55,7 +55,7 @@ resource "yandex_compute_instance" "test" {
 
   provisioner "file" {
     source      = "Dockerfile"
-    destination = "/home/Dockerfile/"
+    destination = "/home/ubuntu/Dockerfile"
   }
 
   provisioner "remote-exec" {
