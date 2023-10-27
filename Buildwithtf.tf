@@ -43,12 +43,12 @@ resource "yandex_compute_instance" "test" {
 
 #Indicate the path to the ssh key
   metadata = {
-    ssh-keys = "root:${file("/home/dmitry/test/Lesson14Terraform/test.pub")}"
+    ssh-keys = "ubuntu:${file("/home/dmitry/test/Lesson14Terraform/test.pub")}"
   }
 
     connection {
     type     = "ssh"
-    user     = "root"
+    user     = "ubuntu"
     private_key = file("/home/dmitry/test/Lesson14Terraform/test")
     host = yandex_compute_instance.test.network_interface.0.nat_ip_address
   }
