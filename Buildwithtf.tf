@@ -9,7 +9,7 @@ terraform {
 
 # Define output
 output "public_ip_address" {
-  value = yandex_compute_instance.test.public_ip_address
+  value = yandex_compute_instance.test.network_interface.0.nat_ip_address
 }
 
 #Configure connection to my yandex.cloud
