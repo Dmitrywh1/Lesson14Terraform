@@ -9,7 +9,6 @@ terraform {
 
 provider "yandex" {
   token                    = ""
-  service_account_key_file = "path_to_service_account_key_file"
   cloud_id                 = "b1g076oa23iiut56kpqh"
   folder_id                = "b1gs7vib6tce4ocj9pnr"
   zone                     = "ru-central1-a"
