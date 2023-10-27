@@ -39,5 +39,9 @@ resource "yandex_compute_instance" "test" {
   metadata = {
     ssh-keys = "builder:${file("/home/dmitry/test/Lesson14Terraform/test.pub")}"
   }
+
+  output "public_ip" {
+  value = yandex_compute_instance.test.public_ip_address
+}
 }
 
