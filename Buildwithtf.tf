@@ -31,7 +31,7 @@ resource "yandex_compute_instance" "test" {
   }
 
   network_interface {
-    subnet_id = "default"
+    subnet_id = "default-ru-central1-b"
   }
 
   metadata = {
