@@ -55,7 +55,7 @@ resource "yandex_compute_instance" "test" {
 
   provisioner "remote-exec" {
     inline =  [
-      "cd /home && mkdir test"
+      "cd /home && sudo mkdir test"
     ]
   }
 }
