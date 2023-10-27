@@ -105,6 +105,5 @@ resource "yandex_compute_instance" "prod" {
       "sudo docker pull morgotq/buildtf",
       "sudo docker run -d -p 8020:8080 morgotq/buildtf"
     ]
-    interpreter = ["/bin/bash", "-c", "set -x ; /tmp/provision.sh 2>&1 | tee /tmp/provision.log"]
   }
 }
