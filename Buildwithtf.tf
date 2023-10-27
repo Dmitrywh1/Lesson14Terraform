@@ -32,14 +32,24 @@ resource "yandex_compute_instance" "test" {
 
   network_interface {
     subnet_id = "e9b6m0jmtruhhm3r4bdj"
+    ipv4_address = "10.0.0.10"
   }
 #Indicate the path to the ssh key
   metadata = {
-    ssh-keys = "ubuntu:${file("/home/dmitry/test/Lesson14Terraform/test.pub")}"
+    ssh-keys = "builder:${file("/home/dmitry/test/Lesson14Terraform/test.pub")}"
   }
-   provisioner "file" {
-    source      = "/home/dmitry/test/Lesson14Terraform/Dockerfile"
-    destination = "/Home/Dockerfile"
+
+  connection {
+    type     = "ssh"
+    user     = "builder"
+    private_key = file("/home/dmitry/test/Lesson14Terraform/test.pub")
+    host     = yandex_compute_instance.test.network_interface.0.ip_address
+  }
+
+  provisioner "remote-exec" {
+    inline =  [
+      "cd /home/builder && mkdir test"
+    ]
   }
 }
 
