@@ -35,11 +35,6 @@ resource "yandex_compute_instance" "test" {
     nat            = true
   }
 
-
-output "instance_ip" {
-  value = yandex_compute_instance.test.network_interface.0.nat_ip_address
-}
-
 #Indicate the path to the ssh key
   metadata = {
     ssh-keys = "builder:${file("/home/dmitry/test/Lesson14Terraform/test.pub")}"
