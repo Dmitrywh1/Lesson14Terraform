@@ -50,7 +50,7 @@ resource "yandex_compute_instance" "test" {
     type     = "ssh"
     user     = "builder"
     private_key = file("/home/dmitry/test/Lesson14Terraform/test")
-    host     = public_ip_address
+    host = yandex_compute_instance.test.network_interface.0.nat_ip_address
   }
 
   provisioner "remote-exec" {
