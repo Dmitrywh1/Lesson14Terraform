@@ -40,8 +40,17 @@ resource "yandex_compute_instance" "test" {
     ssh-keys = "builder:${file("/home/dmitry/test/Lesson14Terraform/test.pub")}"
   }
 
-  output "public_ip" {
-  value = yandex_compute_instance.test.public_ip_address
-}
+    connection {
+    type     = "ssh"
+    user     = "builder"
+    private_key = file("/home/dmitry/test/Lesson14Terraform/test")
+    host     = yandex_compute_instance.test.public_ip_address
+  }
+
+  provisioner "remote-exec" {
+    inline =  [
+      "cd /home/builder && mkdir test"
+    ]
+  }
 }
 
