@@ -44,18 +44,5 @@ output "instance_ip" {
   metadata = {
     ssh-keys = "builder:${file("/home/dmitry/test/Lesson14Terraform/test.pub")}"
   }
-
-  connection {
-    type     = "ssh"
-    user     = "builder"
-    private_key = file("/home/dmitry/test/Lesson14Terraform/test")
-    host     = yandex_compute_instance.test.network_interface.0.nat_ip_address
-  }
-
-  provisioner "remote-exec" {
-    inline =  [
-      "cd /home/builder && mkdir test"
-    ]
-  }
 }
 
