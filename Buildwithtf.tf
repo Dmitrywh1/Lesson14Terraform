@@ -63,7 +63,7 @@ resource "yandex_compute_instance" "test" {
       "sudo apt update && sudo apt install docker.io -y",
       "cd /home/ubuntu && sudo docker build -t build14 .",
       "sudo docker login -u morgotq -p Zoipolidz1.",
-      "sudo docker tag build14 morgotq/build14 && sudo docker push morgotq/build14 "
+      "sudo docker tag build14 morgotq/build14 && sudo docker push morgotq/build14"
     ]
   }
 }
