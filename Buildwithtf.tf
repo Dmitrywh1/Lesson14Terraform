@@ -10,7 +10,7 @@ terraform {
 
 #Configure connection to my yandex.cloud
 provider "yandex" {
-  token                    = "y0_AgAAAABInuphAATuwQAAAADwPYzg6Bkb2OKrS_irllXl28Piw_Y_20w"
+  token                    = ""
   cloud_id                 = "b1g076oa23iiut56kpqh"
   folder_id                = "b1gs7vib6tce4ocj9pnr"
   zone                     = "ru-central1-a"
