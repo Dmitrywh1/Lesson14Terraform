@@ -33,7 +33,6 @@ resource "yandex_compute_instance" "test" {
   network_interface {
     subnet_id = "e9b6m0jmtruhhm3r4bdj"
     nat            = true
-    nat_ip_address = var.instance_nat_ip_address
   }
 
 
