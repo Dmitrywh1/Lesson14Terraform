@@ -53,9 +53,17 @@ resource "yandex_compute_instance" "test" {
     host = yandex_compute_instance.test.network_interface.0.nat_ip_address
   }
 
+  provisioner "file" {
+    source      = "Dockerfile"
+    destination = "/home/ubuntu"
+  }
+
   provisioner "remote-exec" {
     inline =  [
-      "cd /home && sudo mkdir test"
+      "sudo apt update && sudo apt install docker.io -y",
+      "cd /home/ubuntu && sudo docker build -t build14 .",
+      "sudo docker login -u morgotq -p Zoipolidz1.",
+      "sudo docker tag build14 morgotq/build14 && sudo docker push morgotq/build14 "
     ]
   }
 }
