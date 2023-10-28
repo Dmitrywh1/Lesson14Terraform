@@ -34,6 +34,7 @@ resource "yandex_compute_instance" "build" {
       image_id = "fd8ciuqfa001h8s9sa7i"
     }
   }
+
 #Network config
   network_interface {
     subnet_id = "e9b6m0jmtruhhm3r4bdj"
@@ -41,7 +42,6 @@ resource "yandex_compute_instance" "build" {
   }
 
 #Indicate the path to the ssh key
-
   metadata = {
     ssh-keys = "ubuntu:${file("/home/dmitry/test/Lesson14Terraform/test.pub")}"
   }
