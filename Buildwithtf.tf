@@ -21,27 +21,31 @@ resource "yandex_compute_instance" "build" {
   name        = "build"
   platform_id = "standard-v1"
   zone        = "ru-central1-a"
+
 #Chose count core and ram
   resources {
     cores  = 2
     memory = 4
   }
+
 #Chose ubuntu 20.04 (if I want to select another OC I can do in bash 'yc compute image list --folder-id standard-images | grep ubuntu' for exemple
   boot_disk {
     initialize_params {
       image_id = "fd8ciuqfa001h8s9sa7i"
     }
   }
-
+#Network config
   network_interface {
     subnet_id = "e9b6m0jmtruhhm3r4bdj"
     nat            = true
   }
 
 #Indicate the path to the ssh key
+
   metadata = {
     ssh-keys = "ubuntu:${file("/home/dmitry/test/Lesson14Terraform/test.pub")}"
   }
+
 #Configure ssh-connect to build host
   connection {
     type     = "ssh"
@@ -49,17 +53,19 @@ resource "yandex_compute_instance" "build" {
     private_key = file("/home/dmitry/test/Lesson14Terraform/test")
     host = yandex_compute_instance.build.network_interface.0.nat_ip_address
   }
+
 #scp Dockerfile in build host
   provisioner "file" {
     source      = "Dockerfile"
     destination = "/home/ubuntu/Dockerfile"
   }
+
 #Connect to build host and build image then send to docker registry
   provisioner "remote-exec" {
     inline =  [
       "sudo apt update && sudo apt install docker.io -y",
       "cd /home/ubuntu && sudo docker build -t buildtf .",
-      "sudo docker login -u morgotq -p Zoipolidz1.",
+      "sudo docker login -u morgotq -p slojnyiparol",
       "sudo docker tag buildtf morgotq/buildtf && sudo docker push morgotq/buildtf"
     ]
   }
@@ -70,17 +76,20 @@ resource "yandex_compute_instance" "prod" {
   name        = "prod"
   platform_id = "standard-v1"
   zone        = "ru-central1-a"
+
 #Chose count core and ram
   resources {
     cores  = 2
     memory = 4
   }
+
 #Chose ubuntu 20.04 (if I want to select another OC I can do in bash 'yc compute image list --folder-id standard-images | grep ubuntu' for exemple
   boot_disk {
     initialize_params {
       image_id = "fd8ciuqfa001h8s9sa7i"
     }
   }
+
 #Configure network options
   network_interface {
     subnet_id = "e9b6m0jmtruhhm3r4bdj"
@@ -91,6 +100,7 @@ resource "yandex_compute_instance" "prod" {
   metadata = {
     ssh-keys = "ubuntu:${file("/home/dmitry/test/Lesson14Terraform/prod.pub")}"
   }
+
 #Configure ssh-connect to prod host
   connection {
     type     = "ssh"
@@ -98,6 +108,7 @@ resource "yandex_compute_instance" "prod" {
     private_key = file("/home/dmitry/test/Lesson14Terraform/prod")
     host = yandex_compute_instance.prod.network_interface.0.nat_ip_address
   }
+
 #Connect to prod host and build image from registry and run it
   provisioner "remote-exec" {
     inline =  [
